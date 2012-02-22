@@ -1,5 +1,7 @@
 A simple Redis Cache using [node-redis](https://github.com/mranney/node_redis)
 
+## NOTE: This is only meant to be used with local redis servers
+
 # API
 
 ## Constructor

@@ -46,17 +46,17 @@ Cache.prototype.set = function(key, value, ttl, callback) {
 
 Cache.prototype.get = function(key, callback) {
   var self = this;
-  this.client.get(key, function(err, recommendations) {
+  this.client.get(key, function(err, value) {
     if (err) {
       self.errors++;
       return callback(err);
     }
-    if (!recommendations) {
+    if (!value) {
       self.misses++;
       return callback();
     }
     self.hits++;
-    return callback(err, recommendations);
+    return callback(err, value);
   });
 };
 
