@@ -24,6 +24,7 @@ var Cache = module.exports = function() {
   this.connected = false;
 };
 
+Cache.prototype.setHash = 
 Cache.prototype.set = function(key, value, ttl, callback) {
   if (typeof ttl === 'function') {
     callback = ttl;
@@ -32,7 +33,8 @@ Cache.prototype.set = function(key, value, ttl, callback) {
   ttl = ttl || this.default_ttl;
 
   var self = this;
-  this.client.set(key, value, function(err) {
+  var op = typeof value === 'string' ? 'set' : 'hmset';
+  this.client[op](key, value, function(err) {
     if (err) {
       self.errors++;
       return callback(err);
@@ -44,9 +46,17 @@ Cache.prototype.set = function(key, value, ttl, callback) {
   });
 };
 
+Cache.prototype.getHash = function(key, callback) {
+  this._get(key, 'hgetall', callback);
+};
+
 Cache.prototype.get = function(key, callback) {
+  this._get(key, 'get', callback);
+};
+
+Cache.prototype._get = function(key, op, callback) {
   var self = this;
-  this.client.get(key, function(err, value) {
+  this.client[op](key, function(err, value) {
     if (err) {
       self.errors++;
       return callback(err);

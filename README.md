@@ -11,18 +11,27 @@ var Cache = require('cacheit');
 var cache = new Cache();
 ```
 
-## cache.set(key, value, ttl, callback)
+## cache.set(key, value, [ttl], [callback])
 
  * ```key``` - string 
- * ```value``` - string type only
- * ```ttl``` - time to live in ms (optional)
- * ```callback``` - optional
+ * ```value``` - string or hash object (must be flat) 
+ * ```ttl``` - time to live in ms 
+ * ```callback```
+
+## cache.setHash(key, valuue, [ttl], [callback])
+An alias for cache.set. This is just for symmetry with cache.getHash.
 
 ## cache.get(key, callback)
 
  ```key``` - string
  
 Returns the string value or 'undefined' if the key is not found.
+
+## cache.getHash(key, callback)
+
+  ```key``` - string
+
+Returns the entire hash object using the redis 'HGETALL' command.
 
 ## cache.total_keys(callback)
 
