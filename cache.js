@@ -46,6 +46,16 @@ Cache.prototype.set = function(key, value, ttl, callback) {
   });
 };
 
+Cache.prototype.delete = function(key, callback) {
+  this.client.del(key, function(err) {
+    if (err) {
+      self.errors++;
+      return callback(err);
+    }
+    callback(null);
+  });
+};
+
 Cache.prototype.getHash = function(key, callback) {
   this._get(key, 'hgetall', callback);
 };

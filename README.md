@@ -15,7 +15,7 @@ var cache = new Cache();
 
  * ```key``` - string 
  * ```value``` - string or hash object (must be flat) 
- * ```ttl``` - time to live in ms 
+ * ```ttl``` - time to live in m 
  * ```callback```
 
 ## cache.setHash(key, valuue, [ttl], [callback])
@@ -33,6 +33,12 @@ Returns the string value or 'undefined' if the key is not found.
 
 Returns the entire hash object using the redis 'HGETALL' command.
 
+## cache.delete(key, callback)
+
+  ```key``` - string
+
+Deletes the key using the redis 'DEL' command.
+
 ## cache.total_keys(callback)
 
 Returns the total number of keys currently cached
@@ -48,3 +54,14 @@ Returns the total number of keys currently cached
  * ```cache.disconnects```
  * ```cache.connected```
 
+# Tests
+Ensure you have a local version of redis running.
+
+Install mocha
+    
+    npm install mocha
+
+Run tests
+
+    cd test
+    mocha test.js --reporter spec
