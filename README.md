@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/andrewjstone/cacheit.png)](http://travis-ci.org/andrewjstone/cacheit)
 A simple Redis Cache using [node-redis](https://github.com/mranney/node_redis)
 
 ## NOTE: This is only meant to be used with local redis servers
