@@ -15,7 +15,7 @@ var cache = new Cache();
 
  * ```key``` - string 
  * ```value``` - string or hash object (must be flat) 
- * ```ttl``` - time to live in m 
+ * ```ttl``` - time to live in seconds 
  * ```callback```
 
 ## cache.setHash(key, valuue, [ttl], [callback])
