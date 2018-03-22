@@ -2,7 +2,7 @@ var redis = require('redis');
 
 var Cache = module.exports = function() {
   var self = this;
-  this.client = redis.createClient();
+  this.client = redis.createClient({detect_buffers: true});
   this.client.on('error', function(err) {
     console.error('redis client error'+err);
     throw(err);
@@ -33,7 +33,7 @@ Cache.prototype.set = function(key, value, ttl, callback) {
   ttl = ttl || this.default_ttl;
 
   var self = this;
-  var op = typeof value === 'string' ? 'set' : 'hmset';
+  var op = typeof value === 'string' || value instanceof Buffer ? 'set' : 'hmset';
   this.client[op](key, value, function(err) {
     if (err) {
       self.errors++;
