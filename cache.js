@@ -1,8 +1,11 @@
 var redis = require('redis');
 
+var port = process.env.CACHEIT_PORT || 6379;
+var host = process.env.CACHEIT_HOST || 'localhost';
+
 var Cache = module.exports = function() {
   var self = this;
-  this.client = redis.createClient({detect_buffers: true});
+  this.client = redis.createClient(port, host, {detect_buffers: true});
   this.client.on('error', function(err) {
     console.error('redis client error'+err);
     throw(err);
