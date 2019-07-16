@@ -1,8 +1,11 @@
 var redis = require('redis');
 
+var port = process.env.CACHEIT_PORT || 6379;
+var host = process.env.CACHEIT_HOST || 'localhost';
+
 var Cache = module.exports = function() {
   var self = this;
-  this.client = redis.createClient();
+  this.client = redis.createClient(port, host, {detect_buffers: true});
   this.client.on('error', function(err) {
     console.error('redis client error'+err);
     throw(err);
@@ -33,7 +36,7 @@ Cache.prototype.set = function(key, value, ttl, callback) {
   ttl = ttl || this.default_ttl;
 
   var self = this;
-  var op = typeof value === 'string' ? 'set' : 'hmset';
+  var op = typeof value === 'string' || value instanceof Buffer ? 'set' : 'hmset';
   this.client[op](key, value, function(err) {
     if (err) {
       self.errors++;
